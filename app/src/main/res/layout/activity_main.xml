@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#fff"
+    tools:context="com.dungeoncrawl.MainActivity">
+    <GridView
+        android:id="@+id/miniMap"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:columnWidth="100px"
+        android:verticalSpacing="2dp"
+        android:horizontalSpacing ="2dp"
+        android:background="@android:color/black"
+        android:numColumns="auto_fit" />
+    <ImageSwitcher
+        android:id="@+id/imageSwitcher"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_below="@+id/btnUp"
+        android:layout_centerHorizontal="true" />
+    <ImageButton
+        android:id="@+id/btnUp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/up_arrow"
+        android:background="@android:color/transparent" />
+    <ImageButton
+        android:id="@+id/btnLeft"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/rotate_left"
+        android:background="@android:color/transparent"
+        android:layout_alignTop="@+id/btnRight"
+        android:layout_toLeftOf="@+id/imageSwitcher"
+        android:layout_toStartOf="@+id/imageSwitcher" />
+    <ImageButton
+        android:id="@+id/btnRight"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/rotate_right"
+        android:background="@android:color/transparent"
+        android:layout_alignTop="@+id/imageSwitcher"
+        android:layout_toRightOf="@+id/imageSwitcher"
+        android:layout_toEndOf="@+id/imageSwitcher"
+        android:layout_marginTop="60dp" />
+    <ImageView
+        android:id="@+id/compass"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/imageSwitcher"
+        android:src="@drawable/compass_north"/>
+    </RelativeLayout>
