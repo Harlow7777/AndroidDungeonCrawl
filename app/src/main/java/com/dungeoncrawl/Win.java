@@ -8,8 +8,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
+
+import battle.R;
 
 public class Win extends AppCompatActivity {
 
@@ -17,7 +18,7 @@ public class Win extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_win);
-        final Intent intent = new Intent(this, MainActivity.class);
+        final Intent intent = new Intent(this, DungeonCrawl.class);
 
         SharedPreferences scoreBoard = this.getSharedPreferences("myPrefsKey", Context.MODE_PRIVATE);
         int score = scoreBoard.getInt("key", 0); //0 is the default value
@@ -28,12 +29,12 @@ public class Win extends AppCompatActivity {
         ViewGroup layout = (ViewGroup) findViewById(R.id.highScore);
         layout.addView(textView);
 
+        //TODO: get quit button and play again working
         final Button playAgain = (Button) findViewById(R.id.playAgain);
         playAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 startActivity(intent);
-                finish();
             }
         });
 
@@ -41,7 +42,6 @@ public class Win extends AppCompatActivity {
         playAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                startActivity(intent);
                 finish();
             }
         });
