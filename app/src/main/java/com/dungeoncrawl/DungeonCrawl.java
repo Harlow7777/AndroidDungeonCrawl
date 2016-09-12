@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.IBinder;
-import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -27,7 +26,6 @@ import java.util.Random;
 import battle.Battle;
 import battle.GameSetup;
 import battle.R;
-import battle.SetupPlayer;
 import character.Rogue;
 import equipment.Inventory;
 import equipment.Item;
@@ -46,7 +44,6 @@ public class DungeonCrawl extends AppCompatActivity {
     final Class drawableClass = R.drawable.class;
     final Field[] fields = drawableClass.getFields();
     private List<List<HashMap<Character, String>>> minimap = new ArrayList<List<HashMap<Character, String>>>();
-    private GameSetup g = new GameSetup();
     private boolean disarmed = false;
     private int steps = 0;
     private boolean mIsBound = false;
@@ -59,10 +56,9 @@ public class DungeonCrawl extends AppCompatActivity {
         Intent music = new Intent();
         music.setClass(this,MusicService.class);
         startService(music);
-        g.player = getIntent().getExtras().getParcelable("Player");
-        System.out.println(g.player.getClass());
-        System.out.println("NEW PLAYER HP: " + g.player.getFighterHP());
-        for(Item i : g.player.characterInventory) {
+        System.out.println(GameSetup.player.getClass());
+        System.out.println("NEW PLAYER HP: " + GameSetup.player.getFighterHP());
+        for(Item i : GameSetup.player.characterInventory) {
             System.out.println("Item class: " + i.getClass().getName());
             System.out.println("NEW PLAYER INV: " + i.getType());
             System.out.println("NEW PLAYER INV: " + i.getGroup());
@@ -134,7 +130,7 @@ public class DungeonCrawl extends AppCompatActivity {
                 String fileName = roomLayout.get(currDir);
                 if(fileName.charAt(fileName.length()-1) == 'd' && !disarmed){
                     System.out.println("Ouch! Should have disarmed that trap...");
-                    g.player.setFighterHP((g.player.getFighterHP())-1);
+                    GameSetup.player.setFighterHP((GameSetup.player.getFighterHP())-1);
                 }
                 if(fileName.equals("dungeon_exit")){
                     System.out.println("Congratulations, You've made it!");
@@ -190,7 +186,6 @@ public class DungeonCrawl extends AppCompatActivity {
         inventory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                intent.putExtra("Player", g.player);
                 startActivityForResult(intent, 1);
             }
         });
@@ -199,7 +194,6 @@ public class DungeonCrawl extends AppCompatActivity {
         fight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                battleIntent.putExtra("Player", g.player);
                 startActivity(battleIntent);
             }
         });
@@ -216,7 +210,7 @@ public class DungeonCrawl extends AppCompatActivity {
         disarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-               if(g.player.getClass().equals(Rogue.class)){
+               if(GameSetup.player.getClass().equals(Rogue.class)){
                    textView.setText("disarmed");
                    displayImage("dungeon_door_disarmed");
                    disarmed = true;
@@ -233,15 +227,6 @@ public class DungeonCrawl extends AppCompatActivity {
                     //buy and sell loot
             }
         });
-    }
-
-    @Override
-    protected void onActivityResult (int requestCode, int resultCode, Intent data) {
-        System.out.println("ONACTIVITYRESULT responsecode : " + requestCode);
-        if(requestCode == 1) {
-            System.out.println("Updating player after activity returned result");
-            g.player = data.getExtras().getParcelable("player");
-        }
     }
 
     private void setSwitcherAnimation(String direction){

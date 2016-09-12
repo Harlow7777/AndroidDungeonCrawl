@@ -26,7 +26,6 @@ public class Inventory extends ListActivity {
     List<Item> list = new ArrayList<>();
     ArrayList<String> listItems=new ArrayList<>();
     ArrayAdapter<String> adapter;
-    private GameSetup g = new GameSetup();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +35,8 @@ public class Inventory extends ListActivity {
                 android.R.layout.simple_list_item_1,
                 listItems);
         setListAdapter(adapter);
-        g.player = getIntent().getExtras().getParcelable("Player");
-        for(Item i : g.player.characterInventory) {
+//        GameSetup.player = getIntent().getExtras().getParcelable("Player");
+        for(Item i : GameSetup.player.characterInventory) {
             System.out.println("Item class: " + i.getClass().getName());
             System.out.println("NEW PLAYER TYPE: " + i.getType());
             System.out.println("NEW PLAYER GROUP: " + i.getGroup());
@@ -45,7 +44,7 @@ public class Inventory extends ListActivity {
             list.add(i);
         }
         TextView hp = (TextView) findViewById(R.id.player);
-        hp.setText("HP: " + g.player.getFighterHP());
+        hp.setText("HP: " + GameSetup.player.getFighterHP());
         setActionListeners();
         updateInventoryView();
     }
@@ -55,9 +54,9 @@ public class Inventory extends ListActivity {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent resultIntent = new Intent();
-                resultIntent.putExtra("player", g.player);
-                setResult(1,resultIntent);
+//                Intent resultIntent = new Intent();
+//                resultIntent.putExtra("player", GameSetup.player);
+//                setResult(1,resultIntent);
                 finish();
             }
         });
@@ -91,18 +90,22 @@ public class Inventory extends ListActivity {
                                     for(Item i : list) {
                                         String itemType = i.getType().toString();
                                         if(i.getType().equals(itemAttrs[2])) {
-                                            if(useUtility(itemType, g.player)) {
+                                            if(useUtility(itemType, GameSetup.player)) {
                                                 System.out.println("Decrementing item amount");
                                                 int index = list.indexOf(i);
-                                                i.setAmount(i.getAmount()-1);
+                                                if(i.getAmount() == 1) {
+                                                    list.remove(i);
+                                                } else {
+                                                    i.setAmount(i.getAmount() - 1);
+                                                }
                                                 list.set(index, i);
-                                                g.player.setEquipment(list);
+                                                GameSetup.player.setEquipment(list);
                                                 listItems.clear();
                                                 updateInventoryView();
                                             }
                                         }
                                     }
-                                    hp.setText("HP: " + g.player.getFighterHP());
+                                    hp.setText("HP: " + GameSetup.player.getFighterHP());
                                 }
                             })
                     .show();

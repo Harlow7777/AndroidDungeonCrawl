@@ -22,7 +22,6 @@ import equipment.Item;
 
 public class SetupPlayer extends GameSetup implements Serializable {
 
-	private GameSetup g = new GameSetup();
 	private boolean mIsBound = false;
 	private MusicService mServ;
 
@@ -65,8 +64,8 @@ public class SetupPlayer extends GameSetup implements Serializable {
 		rogue.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				g.player = new Rogue("");
-				intent.putExtra("Player", g.player);
+				GameSetup.player = new Rogue("");
+				//intent.putExtra("Player", GameSetup.player);
 				doUnbindService();
 				startActivity(intent);
 			}
@@ -75,8 +74,8 @@ public class SetupPlayer extends GameSetup implements Serializable {
 		barb.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				g.player = new Barbarian("");
-				intent.putExtra("Player", g.player);
+				GameSetup.player = new Barbarian("");
+				//intent.putExtra("Player", GameSetup.player);
 				doUnbindService();
 				startActivity(intent);
 			}
@@ -85,8 +84,8 @@ public class SetupPlayer extends GameSetup implements Serializable {
 		wizard.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				g.player = new Wizard("");
-				intent.putExtra("Player", g.player);
+				GameSetup.player = new Wizard("");
+				//intent.putExtra("Player", GameSetup.player);
 				doUnbindService();
 				startActivity(intent);
 			}
@@ -95,7 +94,7 @@ public class SetupPlayer extends GameSetup implements Serializable {
 		knight.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				g.player = new Knight("");
+				GameSetup.player = new Knight("");
 				doUnbindService();
 				startActivity(intent);
 			}
